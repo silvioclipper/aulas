@@ -8,20 +8,25 @@ module.exports = {
         const userExist = await Dev.findOne({user: username})
 
         if (userExist) {
-            return res.json(userExist)
+            return res.json({"message":"Usuário já existe"})
         }
         
         const response = await axios.get(`https://api.github.com/users/${username}`)
-
-        const { name, bio, avatar_url: avatar } = response.data
+        try {
+            const { name, bio, avatar_url: avatar } = response.data
         
-         const dev = await Dev.create({
-             name,
-            user: username,
-             bio,
-             avatar
-         })
+            const dev = await Dev.create({
+                name,
+               user: username,
+                bio,
+                avatar
+            })
+            return res.json(dev)
+        }catch (error ) {
+            return res.json({"message":"Usuário não existe no github"})
+        }
         
-        return res.json(dev)
+        
+        
     }
 }
