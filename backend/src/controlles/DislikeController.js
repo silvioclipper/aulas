@@ -13,13 +13,12 @@ module.exports = {
 
 
         
-        loggerDev.likes.push(targetDev._id)
+        loggerDev.dislikes.push(targetDev._id)
 
         
 
         await loggerDev.save()
-        if (targetDev.likes.includes(loggerDev._id))
-            console.log("DEU MATCH")
+
 
         return res.json({loggerDev})
     }
